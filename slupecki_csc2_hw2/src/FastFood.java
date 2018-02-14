@@ -161,6 +161,8 @@ public class FastFood extends Frame {
         //Stan's additions
         //add removal button listener
         deleteItem.addActionListener(buttonListener);
+        //add list removal listender
+        itemsOrderedList.addActionListener(selListener);
         
 	} // end of constructor
 
@@ -196,6 +198,22 @@ public class FastFood extends Frame {
                 selectedItem = beverageList.getSelectedItem();
                 itemPrice = BEVERAGE_PRICE[selectedIndex];
                 addOrderedItem(selectedItem, itemPrice);
+            }
+            else if(event.getSource() == itemsOrderedList) {
+                //find the item name
+                selectedItem = itemsOrderedList.getSelectedItem();
+                //only perform this if there is a selected item
+    	        
+                //isolate the name from the selected items
+                //remove all non space, non alphanumeric characters
+                //	then trim trailing whitespace
+    	        String itemName = selectedItem.replaceAll("[^a-zA-Z ]","").trim();
+    	        
+                
+    	        //find the item price
+                itemPrice = findPrice(itemName);
+                //remove that item from the checkout
+                removeOrderedItem(selectedItem, itemPrice);
             }
         }
     }
@@ -242,14 +260,17 @@ public class FastFood extends Frame {
                 }
             }
             else if(event.getSource() == deleteItem) {  // get item from dessert list
-                selectedIndex = beverageList.getSelectedIndex();
+                selectedIndex = itemsOrderedList.getSelectedIndex();
                 if(selectedIndex >= 0) {
-                    //find the item name
+                	//find the item name
                     selectedItem = itemsOrderedList.getSelectedItem();
                     //only perform this if there is a selected item
-        	        String itemName = selectedItem.split("\\s")[0];
-                    //The selectedItem includes the name and price
-                    //	by splitting the string, I can isolate the name
+        	        
+                    //isolate the name from the selected items
+                    //remove all non space, non alphanumeric characters
+                    //	then trim trailing whitespace
+        	        String itemName = selectedItem.replaceAll("[^a-zA-Z ]","").trim();
+        	        
                     
         	        //find the item price
                     itemPrice = findPrice(itemName);
