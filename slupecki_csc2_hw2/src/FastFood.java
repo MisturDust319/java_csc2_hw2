@@ -25,7 +25,7 @@ public class FastFood extends Frame {
     static final String[] FRUIT = {"Apple", "Orange", "Peach", "Banana" };
     static final int[] FRUIT_PRICE = { 89, 79, 99, 59 };
     static final String[] BEVERAGES = { "Soda", "Coffee", "Juice", "Water" };
-    static final int[] BEVERAGES_PRICE = { 85, 95, 75, 55 };
+    static final int[] BEVERAGE_PRICE = { 85, 95, 75, 55 };
     
     // List and Button control
     List junkFoodList;
@@ -102,6 +102,22 @@ public class FastFood extends Frame {
         addFruit = new Button("Get Fruit Item");
         buttonPanel.add(addFruit);
         
+        // create display and control for fruit selection items
+        Panel beveragePanel = new Panel(new BorderLayout());
+        itemPanel.add(beveragePanel);
+        Label beverage = new Label("Beverage Items", Label.CENTER);
+        beverage.setForeground(Color.red);
+        beveragePanel.add(beverage, BorderLayout.NORTH);
+        beverageList = new List();
+        for(int i=0; i<BEVERAGES.length; i++) {
+            beverageList.add(BEVERAGES[i]+ "   $" + (float)BEVERAGE_PRICE[i]/100);
+        }
+        beveragePanel.add(beverageList, BorderLayout.CENTER);
+        buttonPanel = new Panel(new FlowLayout(FlowLayout.CENTER));
+        beveragePanel.add(buttonPanel, BorderLayout.SOUTH);
+        addBeverage = new Button("Get Beverage Item");
+        buttonPanel.add(addBeverage);
+        
         // create display and control for items ordered and amount
         Panel orderedPanel = new Panel(new BorderLayout());
         add(orderedPanel, BorderLayout.EAST);
@@ -131,11 +147,15 @@ public class FastFood extends Frame {
         SelectionListener selListener = new SelectionListener();
         junkFoodList.addActionListener(selListener);
         dessertList.addActionListener(selListener);
+        fruitList.addActionListener(selListener);
+        beverageList.addActionListener(selListener);
 
         // create and add button listener
         ButtonListener buttonListener = new ButtonListener();
         addJunkFood.addActionListener(buttonListener);
         addDessert.addActionListener(buttonListener);
+        addFruit.addActionListener(buttonListener);
+        addBeverage.addActionListener(buttonListener);
 	} // end of constructor
 
     /**
@@ -157,6 +177,18 @@ public class FastFood extends Frame {
                 selectedIndex = dessertList.getSelectedIndex();
                 selectedItem = dessertList.getSelectedItem();
                 itemPrice = DESSERTS_PRICE[selectedIndex];
+                addOrderedItem(selectedItem, itemPrice);
+            }
+            else if(event.getSource() == fruitList) {  // select item from fruit list
+                selectedIndex = fruitList.getSelectedIndex();
+                selectedItem = fruitList.getSelectedItem();
+                itemPrice = FRUIT_PRICE[selectedIndex];
+                addOrderedItem(selectedItem, itemPrice);
+            }
+            else if(event.getSource() == beverageList) {  // select item from beverage list
+                selectedIndex = beverageList.getSelectedIndex();
+                selectedItem = beverageList.getSelectedItem();
+                itemPrice = BEVERAGE_PRICE[selectedIndex];
                 addOrderedItem(selectedItem, itemPrice);
             }
         }
@@ -184,6 +216,22 @@ public class FastFood extends Frame {
                 if(selectedIndex >= 0) {
                     selectedItem = dessertList.getSelectedItem();
                     itemPrice = DESSERTS_PRICE[selectedIndex];
+                    addOrderedItem(selectedItem, itemPrice);
+                }
+            }
+            else if(event.getSource() == addFruit) {  // get item from dessert list
+                selectedIndex = fruitList.getSelectedIndex();
+                if(selectedIndex >= 0) {
+                    selectedItem = fruitList.getSelectedItem();
+                    itemPrice = FRUIT_PRICE[selectedIndex];
+                    addOrderedItem(selectedItem, itemPrice);
+                }
+            }
+            else if(event.getSource() == addBeverage) {  // get item from dessert list
+                selectedIndex = beverageList.getSelectedIndex();
+                if(selectedIndex >= 0) {
+                    selectedItem = beverageList.getSelectedItem();
+                    itemPrice = BEVERAGE_PRICE[selectedIndex];
                     addOrderedItem(selectedItem, itemPrice);
                 }
             }
