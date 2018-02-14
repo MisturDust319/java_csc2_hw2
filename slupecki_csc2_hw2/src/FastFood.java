@@ -3,10 +3,12 @@
  *	Lab:			    Number 3
  *	FILE:				FastFood.java
  *	TARGET:				Java 6.0 and 7.0
+ *	AUTHOR:				Stan Slupecki
  ******************************************************************/
 
 // Import Core Java packages
 import java.awt.*;
+import java.awt.event.*;
 
 public class FastFood extends Frame {
 
@@ -19,13 +21,22 @@ public class FastFood extends Frame {
     static final int[] JUNK_FOODS_PRICE = {199, 150, 99, 299};
     static final String[] DESSERTS = {"Ice cream", "Pie", "Cake", "Donut"};
     static final int[] DESSERTS_PRICE = {149, 249, 299, 99};
-
+    //Additions:
+    static final String[] FRUIT = {"Apple", "Orange", "Peach", "Banana" };
+    static final int[] FRUIT_PRICE = { 89, 79, 99, 59 };
+    static final String[] BEVERAGES = { "Soda", "Coffee", "Juice", "Water" };
+    static final int[] BEVERAGES_PRICE = { 85, 95, 75, 55 };
+    
     // List and Button control
     List junkFoodList;
     List dessertList;
+    List fruitList;
+    List beverageList;
     List itemsOrderedList;
     Button addJunkFood;
     Button addDessert;
+    Button addFruit;
+    Button addBeverage;
     Button deleteItem;
 
     // Total amount and display
@@ -75,6 +86,22 @@ public class FastFood extends Frame {
         addDessert = new Button("Get Dessert Item");
         buttonPanel.add(addDessert);
 
+        // create display and control for fruit selection items
+        Panel fruitPanel = new Panel(new BorderLayout());
+        itemPanel.add(fruitPanel);
+        Label fruit = new Label("Fruit Items", Label.CENTER);
+        fruit.setForeground(Color.red);
+        fruitPanel.add(fruit, BorderLayout.NORTH);
+        fruitList = new List();
+        for(int i=0; i<FRUIT.length; i++) {
+            fruitList.add(FRUIT[i]+ "   $" + (float)FRUIT_PRICE[i]/100);
+        }
+        fruitPanel.add(fruitList, BorderLayout.CENTER);
+        buttonPanel = new Panel(new FlowLayout(FlowLayout.CENTER));
+        fruitPanel.add(buttonPanel, BorderLayout.SOUTH);
+        addFruit = new Button("Get Fruit Item");
+        buttonPanel.add(addFruit);
+        
         // create display and control for items ordered and amount
         Panel orderedPanel = new Panel(new BorderLayout());
         add(orderedPanel, BorderLayout.EAST);
