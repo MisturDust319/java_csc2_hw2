@@ -9,6 +9,7 @@
 // Import Core Java packages
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Arrays;
 
 public class FastFood extends Frame {
 
@@ -156,6 +157,11 @@ public class FastFood extends Frame {
         addDessert.addActionListener(buttonListener);
         addFruit.addActionListener(buttonListener);
         addBeverage.addActionListener(buttonListener);
+        
+        //Stan's additions
+        //add removal button listener
+        deleteItem.addActionListener(buttonListener);
+        
 	} // end of constructor
 
     /**
@@ -235,9 +241,25 @@ public class FastFood extends Frame {
                     addOrderedItem(selectedItem, itemPrice);
                 }
             }
+            else if(event.getSource() == deleteItem) {  // get item from dessert list
+                selectedIndex = beverageList.getSelectedIndex();
+                if(selectedIndex >= 0) {
+                    //find the item name
+                    selectedItem = itemsOrderedList.getSelectedItem();
+                    //only perform this if there is a selected item
+        	        String itemName = selectedItem.split("\\s")[0];
+                    //The selectedItem includes the name and price
+                    //	by splitting the string, I can isolate the name
+                    
+        	        //find the item price
+                    itemPrice = findPrice(itemName);
+                    //remove that item from the checkout
+                    removeOrderedItem(selectedItem, itemPrice);
+                }
+            }
         }
     }
-
+    
     /**
      *  method to add an ordered item
      */
@@ -246,6 +268,38 @@ public class FastFood extends Frame {
         amount += price;
         amountLabel.setText("$"+(float)amount/100);
     }
+    
+    /**
+     *  method to remove an ordered item
+     *  Stan's addition
+     */
+    void removeOrderedItem(String item, int price) {
+    	itemsOrderedList.remove(item);
+    	amount -= price;
+        amountLabel.setText("$"+(float)amount/100);
+    }
+    
+    /**
+     * finds the price of a given item
+     */
+    int findPrice(String item) {
+    	int price = 0;	//return value
+    	if(Arrays.asList(JUNK_FOODS).contains(item)) {
+    		price = JUNK_FOODS_PRICE[Arrays.asList(JUNK_FOODS).indexOf(item)];
+    	}
+    	else if(Arrays.asList(DESSERTS).contains(item)) {
+    		price = DESSERTS_PRICE[Arrays.asList(DESSERTS).indexOf(item)];
+    	}
+    	else if(Arrays.asList(FRUIT).contains(item)) {
+    		price = FRUIT_PRICE[Arrays.asList(FRUIT).indexOf(item)];
+    	}
+    	else if(Arrays.asList(BEVERAGES).contains(item)) {
+    		price = BEVERAGE_PRICE[Arrays.asList(BEVERAGES).indexOf(item)];
+    	}
+    	
+    	return price;
+    }
+    
 
     /**
      * the main method
