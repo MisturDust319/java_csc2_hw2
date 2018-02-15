@@ -171,6 +171,8 @@ public class FastFood extends Frame {
         //Stan's additions
         //add removal button listener
         deleteItem.addActionListener(buttonListener);
+        //add clear all listener
+        clearAll.addActionListener(buttonListener);
         //add list removal listender
         itemsOrderedList.addActionListener(selListener);
         
@@ -288,6 +290,14 @@ public class FastFood extends Frame {
                     //remove that item from the checkout
                     removeOrderedItem(selectedItem, itemPrice);
                 }
+            }
+            else if(event.getSource() == clearAll) {
+            	//clear the junkfood list
+            	itemsOrderedList.clear();
+                //then reset amount to 0
+                amount = 0;
+                //reset amount label
+                amountLabel.setText("$"+(float)amount/100);
             }
         }
     }
