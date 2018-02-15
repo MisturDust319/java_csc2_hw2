@@ -39,6 +39,7 @@ public class FastFood extends Frame {
     Button addFruit;
     Button addBeverage;
     Button deleteItem;
+    Button clearAll;
 
     // Total amount and display
     Label amountLabel;
@@ -70,6 +71,7 @@ public class FastFood extends Frame {
         junkFoodPanel.add(buttonPanel, BorderLayout.SOUTH);
         addJunkFood = new Button("Get Food Item");
         buttonPanel.add(addJunkFood);
+        
 
         // create display and control for dessert selection items
         Panel dessertPanel = new Panel(new BorderLayout());
@@ -143,6 +145,14 @@ public class FastFood extends Frame {
         amountPanel.add(totalLabel, BorderLayout.WEST);
         amountLabel = new Label("$0.00");
         amountPanel.add(amountLabel, BorderLayout.CENTER);
+        
+        // Stan's addition
+        // add clear all button
+        
+        clearAll = new Button("Clear All");
+        buttonPanel = new Panel(new FlowLayout(FlowLayout.CENTER));
+        amountPanel.add(buttonPanel, BorderLayout.SOUTH);
+        buttonPanel.add(clearAll);
 
         // create and add list selection listener
         SelectionListener selListener = new SelectionListener();
@@ -163,6 +173,7 @@ public class FastFood extends Frame {
         deleteItem.addActionListener(buttonListener);
         //add list removal listender
         itemsOrderedList.addActionListener(selListener);
+        
         
 	} // end of constructor
 
